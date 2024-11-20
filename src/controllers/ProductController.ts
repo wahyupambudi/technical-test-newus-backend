@@ -44,7 +44,7 @@ const CreateProduct = async (req: Request, res: Response): Promise<void> => {
         }
         const imageUpload = await uploadToCloudinary(req.file.buffer, req.file.mimetype, 'newus');
         const created = await createProduct(name, desc, imageUpload.secure_url, category_id);
-        res.send(successResponse(200, "Created Category", created));
+        res.send(successResponse(200, "Created Product", created));
     } catch (error: any) {
         if (error != null && error instanceof Error) {
             res.send(errorResponse(500, error.message, error));

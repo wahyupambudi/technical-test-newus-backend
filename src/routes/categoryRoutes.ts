@@ -10,4 +10,10 @@ router.put("/:id", validate(updateCategorySchema), CategoryController.UpdateCate
 router.post("/", validate(createCategorySchema), CategoryController.CreateCategory);
 router.delete("/:id", CategoryController.DeleteCategory);
 
+// swagger
+router.put("/edit/:id", validate(updateCategorySchema), CategoryController.UpdateCategory);
+router.post("/add", validate(createCategorySchema), CategoryController.CreateCategory);
+router.delete("/delete/:id", CategoryController.DeleteCategory);
+
+
 export default router;

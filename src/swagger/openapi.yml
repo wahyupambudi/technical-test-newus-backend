@@ -1,0 +1,337 @@
+docTitle: My Awesome API Documentation
+openapi: "3.0.0"
+info:
+  title: "API Backend Newus Network Tool"
+  version: "1.0.0"
+  description: "API Backend Newus Network Tool Documentation with OPEN API"
+servers:
+  - url: "http://localhost:3000/api/"
+    description: "Development"
+  - url: "https://synrgy7-fsw-be-finalproject-production.up.railway.app/api/v1"
+    description: "Production"
+paths:
+  /category:
+    get:
+      summary: Get all categories
+      description: Retrieve a list of all categories.
+      tags:
+        - Category
+      responses:
+        '200':
+          description: A list of categories.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+              example:
+                - id: 1
+                  name: indoor
+                  createdAt: "2024-11-20T13:00:50.666Z"
+                  updatedAt: "2024-11-20T17:48:54.030Z"
+                - id: 2
+                  name: outdoor
+                  createdAt: "2024-11-20T13:00:50.666Z"
+                  updatedAt: "2024-11-20T17:49:09.646Z"
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: Internal Server Error
+  /category/{id}:
+    get:
+      summary: Get a category by ID
+      description: Retrieve details of a specific category by its ID.
+      tags:
+        - Category
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the category to retrieve
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Category retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+              example:
+                id: 1
+                name: indoor
+                createdAt: "2024-11-20T13:00:50.666Z"
+                updatedAt: "2024-11-20T17:48:54.030Z"
+        '404':
+          description: Category not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: Data Not Found
+                  data:
+                    type: object
+                    nullable: true
+                    example: null
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: Internal Server Error
+  /category/add:
+    post:
+      summary: Create a new category
+      description: Add a new category to the system.
+      tags:
+        - Category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the category
+                  example: outdoor
+      responses:
+        '201':
+          description: Category created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+              example:
+                id: 3
+                name: outdoor
+                createdAt: "2024-11-20T14:00:00.000Z"
+                updatedAt: "2024-11-20T14:00:00.000Z"
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Validation Error From Joi
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - "name must be one of [indoor, outdoor]"
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: Internal Server Error
+  /category/edit/{id}:
+    put:
+      summary: Update a category
+      description: Update the details of a category by its ID.
+      tags:
+        - Category
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the category to update
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: New name for the category
+                  example: indoor
+      responses:
+        '200':
+          description: Category updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+              example:
+                id: 1
+                name: indoor
+                createdAt: "2024-11-20T13:00:50.666Z"
+                updatedAt: "2024-11-20T18:00:00.000Z"
+        '404':
+          description: Category not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: Data Not Found
+                  data:
+                    type: object
+                    nullable: true
+                    example: null
+        '400':
+          description: Validation error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Validation Error
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - "name is required"
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: Internal Server Error
+  /category/delete/{id}:
+    delete:
+      summary: Delete a category
+      description: Remove a category by its ID.
+      tags:
+        - Category
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the category to delete
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Category deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Category deleted successfully.
+                  data:
+                    type: object
+                    nullable: true
+                    example:
+                      id: 1
+                      name: indoor
+                      createdAt: "2024-11-20T13:00:50.666Z"
+                      updatedAt: "2024-11-20T17:48:54.030Z"
+        '404':
+          description: Category not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: Data Not Found
+                  data:
+                    type: object
+                    nullable: true
+                    example: null
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: Internal Server Error
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the category
+        name:
+          type: string
+          description: Name of the category
+        createdAt:
+          type: string
+          format: date-time
+          description: Time when the category was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: Time when the category was last updated
