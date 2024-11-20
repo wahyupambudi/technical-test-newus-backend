@@ -1,0 +1,33 @@
+{
+  "defaultSeverity": "warning",
+  "rules": {
+    "interface-name": true,
+    "no-arg": true,
+    "no-empty": true,
+    "no-eval": true,
+    "no-shadowed-variable": true,
+    "no-unused-variable": true,
+    "no-var-keyword": true,
+    "prefer-const": true,
+    "typedef-whitespace": [
+      true,
+      {
+        "call-signature": "nospace",
+        "index-signature": "nospace",
+        "parameter": "nospace",
+        "property-declaration": "nospace",
+        "variable-declaration": "nospace"
+      }
+    ],
+    "whitespace": [
+      true,
+      {
+        "member-access": true,
+        "switch-colon": true,
+        "switch-case": true,
+        "switch-keyword": true,
+        "variable-declaration": true
+      }
+    ]
+  }
+}
