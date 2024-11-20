@@ -64,14 +64,12 @@ const UpdateProduct = async (req: Request, res: Response): Promise<void> => {
             return;
         }
         const imageUpload = await uploadToCloudinary(req.file.buffer, req.file.mimetype, 'newus');
-
         const updated = await updateProduct(id, name, desc, imageUpload.secure_url, category_id);
 
         if (!updated) {
             res.send(successResponse(404, "Data Not Found", null));
             return;
-        }
-        
+        }        
         res.send(successResponse(200, "Updated Category", updated));
     } catch (error: any) {
         if (error != null && error instanceof Error) {
