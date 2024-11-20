@@ -7,7 +7,7 @@ info:
 servers:
   - url: "http://localhost:3000/api/"
     description: "Development"
-  - url: "https://synrgy7-fsw-be-finalproject-production.up.railway.app/api/v1"
+  - url: "https://technical-test-newus-backend-production.up.railway.app/api/"
     description: "Production"
 paths:
   /category:
