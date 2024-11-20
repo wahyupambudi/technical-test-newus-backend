@@ -11,7 +11,8 @@ const dbDialect = "postgres";
 
 const sequelizeConnection = new Sequelize(dbName, dbUsername, dbPassword, {
     host: dbHost,
-    dialect: dbDialect
+    dialect: dbDialect,
+    timezone: "+07:00"
 })
 
 

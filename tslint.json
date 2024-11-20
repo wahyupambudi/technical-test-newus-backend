@@ -1,6 +1,7 @@
 {
   "defaultSeverity": "warning",
   "rules": {
+    "semicolon": [true, "always", "ignore-interfaces"],
     "interface-name": true,
     "no-arg": true,
     "no-empty": true,
