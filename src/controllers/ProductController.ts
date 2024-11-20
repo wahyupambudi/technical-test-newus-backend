@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { successResponse, errorResponse } from "../helper/responseHandler";
 import { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct } from "../services/productService";
+import { uploadToCloudinary } from "../utils/uploadCloudinary";
 
 const GetAllProducts = async (_req: Request, res: Response): Promise<void> => {
     try {
@@ -36,7 +37,13 @@ const GetProductById = async (req: Request, res: Response): Promise<void> => {
 const CreateProduct = async (req: Request, res: Response): Promise<void> => {
     try {
         const { name, desc, image, category_id } = req.body;
-        const created = await createProduct(name, desc, image, category_id);
+        // image upload
+        if (!req.file) {
+            res.status(400).json({ message: 'No Image Uploaded' });
+            return;
+        }
+        const imageUpload = await uploadToCloudinary(req.file.buffer, req.file.mimetype, 'newus');
+        const created = await createProduct(name, desc, imageUpload.secure_url, category_id);
         res.send(successResponse(200, "Created Category", created));
     } catch (error: any) {
         if (error != null && error instanceof Error) {
@@ -50,12 +57,21 @@ const UpdateProduct = async (req: Request, res: Response): Promise<void> => {
     try {
         const { id } = req.params;
         const { name, desc, image, category_id } = req.body;
-        const updated = await updateProduct(id, name, desc, image, category_id);
+
+        // image upload
+        if (!req.file) {
+            res.status(400).json({ message: 'No Image Uploaded' });
+            return;
+        }
+        const imageUpload = await uploadToCloudinary(req.file.buffer, req.file.mimetype, 'newus');
+
+        const updated = await updateProduct(id, name, desc, imageUpload.secure_url, category_id);
 
         if (!updated) {
             res.send(successResponse(404, "Data Not Found", null));
             return;
         }
+        
         res.send(successResponse(200, "Updated Category", updated));
     } catch (error: any) {
         if (error != null && error instanceof Error) {
