@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { successResponse, errorResponse } from "../helper/responseHandler";
-import { getAllCategories, getCategoryById, createCategory, updateCategory, deleteCategory } from "../services/categoryService";
+import { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct } from "../services/productService";
 
-const GetAllCategory = async (_req: Request, res: Response): Promise<void> => {
+const GetAllProducts = async (_req: Request, res: Response): Promise<void> => {
     try {
-        const categories = await getAllCategories();
+        const categories = await getAllProducts();
         res.send(successResponse(200, "OK", categories));
     } catch (error: any) {
         if (error != null && error instanceof Error) {
@@ -14,10 +14,10 @@ const GetAllCategory = async (_req: Request, res: Response): Promise<void> => {
     }
 };
 
-const GetCategoryById = async (req: Request, res: Response): Promise<void> => {
+const GetProductById = async (req: Request, res: Response): Promise<void> => {
     try {
         const { id } = req.params;
-        const category = await getCategoryById(id);
+        const category = await getProductById(id);
 
         if (!category) {
             res.send(successResponse(404, "Data Not Found", null));
@@ -33,10 +33,10 @@ const GetCategoryById = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-const CreateCategory = async (req: Request, res: Response): Promise<void> => {
+const CreateProduct = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { name } = req.body;
-        const created = await createCategory(name);
+        const { name, desc, image, category_id } = req.body;
+        const created = await createProduct(name, desc, image, category_id);
         res.send(successResponse(200, "Created Category", created));
     } catch (error: any) {
         if (error != null && error instanceof Error) {
@@ -46,11 +46,11 @@ const CreateCategory = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-const UpdateCategory = async (req: Request, res: Response): Promise<void> => {
+const UpdateProduct = async (req: Request, res: Response): Promise<void> => {
     try {
         const { id } = req.params;
-        const { name } = req.body;
-        const updated = await updateCategory(id, name);
+        const { name, desc, image, category_id } = req.body;
+        const updated = await updateProduct(id, name, desc, image, category_id);
 
         if (!updated) {
             res.send(successResponse(404, "Data Not Found", null));
@@ -65,10 +65,10 @@ const UpdateCategory = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-const DeleteCategory = async (req: Request, res: Response): Promise<void> => {
+const DeleteProduct = async (req: Request, res: Response): Promise<void> => {
     try {
         const { id } = req.params;
-        const category = await deleteCategory(id);
+        const category = await deleteProduct(id);
 
         if (!category) {
             res.send(successResponse(404, "Data Not Found", null));
@@ -83,4 +83,4 @@ const DeleteCategory = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-export default { GetAllCategory, CreateCategory, UpdateCategory, GetCategoryById, DeleteCategory };
+export default { GetAllProducts, CreateProduct, UpdateProduct, GetProductById, DeleteProduct };

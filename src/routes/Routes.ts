@@ -1,12 +1,10 @@
 import express from 'express';
-import CategoryController from '../controllers/CategoryController';
+import categoryRouter from "./categoryRoutes";
+import productRouter from "./productRoutes";
 
 const router = express.Router();
 
-router.get("/api/category", CategoryController.GetAllCategory);
-router.get("/api/category/:id", CategoryController.GetCategoryById);
-router.put("/api/category/:id", CategoryController.UpdateCategory);
-router.post("/api/category", CategoryController.CreateCategory);
-router.delete("/api/category/:id", CategoryController.DeleteCategory);
+router.use("/api/category", categoryRouter);
+router.use("/api/product", productRouter);
 
 export default router;

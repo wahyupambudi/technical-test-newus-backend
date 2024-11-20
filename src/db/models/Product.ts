@@ -42,6 +42,10 @@ Product.init({
   image: {
     allowNull: true,
     type: DataTypes.STRING
+  },
+  category_id: {
+    allowNull: true,
+    type: DataTypes.INTEGER
   }
 }, {
   timestamps: true,
