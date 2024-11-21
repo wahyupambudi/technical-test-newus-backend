@@ -4,7 +4,6 @@ import router from "./routes/Routes";
 import setupSwagger from "./swagger/swagger";
 const cors = require('cors');
 
-
 dotenv.config();
 
 const app: Express = express();
@@ -17,8 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (_req: Request, res: Response) => {
-  res.status(200).json({
-    message: "REST API WITH EXPRESS JS",
+  res.status(200).send({
+    message: "REST API FOR NEWUS NETWORK APP",
   });
 });
 
