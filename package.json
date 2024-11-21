@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/wahyupambudi/technical-test-newus-backend#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "joi": "^17.13.3",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
