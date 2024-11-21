@@ -5,10 +5,10 @@ info:
   version: "1.0.0"
   description: "API Backend Newus Network Tool Documentation with OPEN API"
 servers:
-  - url: "http://localhost:3000/api/"
-    description: "Development"
   - url: "https://technical-test-newus-backend-production.up.railway.app/api/"
     description: "Production"
+  - url: "http://localhost:3000/api/"
+    description: "Development"
 paths:
   /category:
     get:
@@ -653,6 +653,127 @@ paths:
                     type: string
                     example: Internal Server Error
 
+  /palindrome/{num}:
+    get:
+      summary: Memeriksa apakah angka merupakan palindrome
+      description: Mengembalikan hasil pemeriksaan apakah angka yang diberikan adalah palindrome.
+      tags:
+        - Palindrome
+      parameters:
+        - name: num
+          in: path
+          description: Angka yang akan diperiksa apakah merupakan palindrome
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Berhasil memeriksa apakah angka palindrome
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Palindrome Check"
+                  number:
+                    type: string
+                    example: "111"
+                  result:
+                    type: boolean
+                    example: true
+        '400':
+          description: Bad Request - jika parameter tidak valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Invalid number format"
+  /catkitty/add-rule:
+    get:
+      summary: Menambahkan rule baru
+      description: Endpoint untuk menambahkan rule dengan angka tertentu dan output yang diinginkan.
+      tags:
+        - Cat Kitty
+      parameters:
+        - name: angka
+          in: query
+          description: Angka yang akan digunakan untuk rule baru
+          required: true
+          schema:
+            type: integer
+            example: 2
+        - name: output
+          in: query
+          description: Output yang akan digunakan untuk rule baru
+          required: true
+          schema:
+            type: string
+            example: "udin"
+      responses:
+        '200':
+          description: Rule berhasil ditambahkan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Menambahkan Rule: 2 dengan output udin"
+        '400':
+          description: Bad Request - jika parameter tidak lengkap atau tidak valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Parameter angka atau output tidak valid"
+  /catkitty/{n}:
+    get:
+      summary: Generate hasil CatKitty
+      description: Menghasilkan array berdasarkan aturan CatKitty untuk angka tertentu.
+      tags:
+        - Cat Kitty
+      parameters:
+        - name: n
+          in: path
+          description: Angka maksimum untuk menghasilkan array CatKitty
+          required: true
+          schema:
+            type: integer
+            example: 15
+      responses:
+        '200':
+          description: Berhasil menghasilkan hasil CatKitty
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: array
+                    items:
+                      oneOf:
+                        - type: integer
+                        - type: string
+                    example: [1, "udin", "cat", 4, "kitty", "cat", 7, 8, "udin", "kitty", 11, "cat", 13, 14, "catKitty"]
+        '400':
+          description: Bad Request - jika parameter `n` tidak valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Parameter n harus berupa angka positif"
 components:
   schemas:
     Category:

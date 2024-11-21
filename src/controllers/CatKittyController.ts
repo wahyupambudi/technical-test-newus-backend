@@ -52,7 +52,7 @@ const addRules = (req: Request, res: Response) => {
     }
 
     addRule(Number(angka), output as string);
-    res.json({ message: `Rule added: ${angka} -> ${output}` });
+    res.json({ message: `Menambahkan Rule: ${angka} dengan output ${output}` });
     return;
 };
 

@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.use("/api/category", categoryRouter);
 router.use("/api/product", productRouter);
-router.use("/palindrome", palindromeRouter);
-router.use("/catkitty", catKittyRouter);
+router.use("/api/palindrome", palindromeRouter);
+router.use("/api/catkitty", catKittyRouter);
 export default router;
